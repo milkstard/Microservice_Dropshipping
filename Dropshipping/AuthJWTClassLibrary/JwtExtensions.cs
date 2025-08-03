@@ -19,7 +19,7 @@ namespace AuthJWTClassLibrary
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = "https://localhost:7285",
+                    ValidIssuer = "https://localhost:7143",
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecurityKey))
