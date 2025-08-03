@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AccountsService.Models
 {
@@ -8,8 +9,10 @@ namespace AccountsService.Models
         [Key]
         [Required(ErrorMessage = "PrimaryKey Id is required")]
         public Guid Id { get; set; }
-        public Guid UserTypes { get; set; }
-        public string User {  get; set; }
+        [ForeignKey("UserTypesId")]
+        [Required(ErrorMessage = "ForeignKey Id is required")]
+        public Guid UserTypeId { get; set; }
+        public string UserName {  get; set; }
         public string Email { get; set; }
         public string Contact_no { get; set; }
         public string Password { get; set; }
