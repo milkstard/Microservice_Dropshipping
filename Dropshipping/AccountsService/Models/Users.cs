@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,11 +8,14 @@ namespace AccountsService.Models
     public class Users
     {
         [Key]
-        [Required(ErrorMessage = "PrimaryKey Id is required")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [ForeignKey("UserTypesId")]
+        [Column("UserTypeFK")]
         [Required(ErrorMessage = "ForeignKey Id is required")]
-        public Guid UserTypeId { get; set; }
+        public string UserTypeFK { get; set; }
+        [Column("UserSaltId")]
+        [Required(ErrorMessage = "ForeignKey Id is required")]
+        public int UserSaltId { get; set; }
         public string UserName {  get; set; }
         public string Email { get; set; }
         public string Contact_no { get; set; }
@@ -20,7 +24,10 @@ namespace AccountsService.Models
         public DateTime Birth_date { get; set; }
         public DateTime Created_date { get; set; }
         public DateTime Updated_date { get; set; }
+        [ForeignKey(nameof(UserTypeFK))]
         public UserTypes UserType { get; set; }
+        [ForeignKey(nameof(UserSaltId))]
+        public UserSalt UserSalt { get; set; }
     }
 }
 

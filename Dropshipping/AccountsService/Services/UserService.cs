@@ -1,13 +1,17 @@
-﻿using AccountsService.Models;
+﻿using AccountsService.DTO;
+using AccountsService.Helper;
+using AccountsService.Models;
 using AccountsService.Repostitories;
 
 namespace AccountsService.Services
 {
     public class UserService : IUserService
     {
+        private readonly AuthHelper _authHelper;
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository) 
+        public UserService(AuthHelper authHelper, IUserRepository userRepository) 
         {
+            _authHelper = authHelper;
             _userRepository = userRepository; 
         }
 
@@ -26,14 +30,17 @@ namespace AccountsService.Services
             throw new NotImplementedException();
         }
 
-        public Users GetUserByLogin(int id)
+        public Users GetUserByLogin(UserLoginDTO userLoginDetails)
         {
-            throw new NotImplementedException();
-        }
+            var userName = _userRepository.GetUserByUserName(userLoginDetails.UserName);
+            var storedHash = _userRepository.
+            if (userName == null)
+            {
+                return null;
+            }
 
-        public Users GetUserByUserName(string name)
-        {
-            throw new NotImplementedException();
+            var userPass = PasswordSaltAndHashHelper.VerifyPassword(userLoginDetails.Password, storedHash, out byte[] salt);
+            
         }
 
         public IEnumerable<Users> GetUsersList()

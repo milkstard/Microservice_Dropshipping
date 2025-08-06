@@ -18,5 +18,7 @@ namespace AccountsService.Helper
         }
 
         public DbSet<Users> Users { get; set; }
+        public DbSet<UserSalt> UserSalts { get; set; }
+        public DbSet<UserTypes> UserTypes { get; set; }
     }
 }
