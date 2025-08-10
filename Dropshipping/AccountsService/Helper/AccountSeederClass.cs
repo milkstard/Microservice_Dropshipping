@@ -45,12 +45,12 @@ namespace AccountsService.Helper
                     new Users
                     {
                         UserTypeFK = "Administrator",
-                        UserSaltId = GetSaltId(context, userSalt.Salt, userSalt.Stash),
+                        UserSaltId = GetSaltId(context, userSalt.Salt, userSalt.Hash),
                         UserName = "admin",
                         Email = "admin@admin.com",
                         Contact_no = "+63-927238",
-                        Password = userSalt.Stash,
-                        Confirmed_password = userSalt.Stash,
+                        Password = userSalt.Hash,
+                        Confirmed_password = userSalt.Hash,
                         Birth_date = new DateTime(2000, 02, 09),
                         Created_date = DateTime.Now
 
@@ -69,16 +69,16 @@ namespace AccountsService.Helper
             context.UserSalts.Add(new UserSalt
             {
                 Salt = salt,
-                Stash = hashedPass
+                Hash = hashedPass
             });
             context.SaveChanges();
-            return new UserSalt{ Stash = hashedPass, Salt = salt};
+            return new UserSalt{ Hash = hashedPass, Salt = salt};
         }
 
         private static int GetSaltId(DbContextClass context, byte[] salt, string hash)
         {
             var saltId = context.UserSalts.Where(userSalt =>
-               userSalt.Salt == salt && userSalt.Stash == hash).Select(userSalt => userSalt.Id).FirstOrDefault();
+               userSalt.Salt == salt && userSalt.Hash == hash).Select(userSalt => userSalt.Id).FirstOrDefault();
             
             return saltId;
         }

@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<AuthHelper>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserSaltRepository, UserSaltRepository>();
 builder.Services.AddDbContext<DbContextClass>();
 
 builder.Services.AddControllers();

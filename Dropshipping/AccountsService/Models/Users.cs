@@ -10,10 +10,10 @@ namespace AccountsService.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Column("UserTypeFK")]
+        [Column("UserType_FK")]
         [Required(ErrorMessage = "ForeignKey Id is required")]
         public string UserTypeFK { get; set; }
-        [Column("UserSaltId")]
+        [Column("UserSaltID_FK")]
         [Required(ErrorMessage = "ForeignKey Id is required")]
         public int UserSaltId { get; set; }
         public string UserName {  get; set; }

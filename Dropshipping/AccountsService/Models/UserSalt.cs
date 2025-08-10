@@ -8,7 +8,7 @@ namespace AccountsService.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Stash {  get; set; }
+        public string Hash {  get; set; }
         public byte[] Salt { get; set; }
         public Users User { get; set; }
     }

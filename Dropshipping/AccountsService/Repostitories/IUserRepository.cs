@@ -6,7 +6,7 @@ namespace AccountsService.Repostitories
     {
         public IEnumerable<Users> GetUsersList();
         public Users GetUserById(Guid id);
-        public Users GetUserByUserName(string userName);
+        public Users GetUserByEmail(string userName);
         public Users UpdateUser(Users user);
         public bool DeleteUser(Guid id);
     }

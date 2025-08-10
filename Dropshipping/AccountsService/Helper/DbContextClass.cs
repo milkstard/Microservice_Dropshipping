@@ -17,6 +17,13 @@ namespace AccountsService.Helper
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Users>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+        }
         public DbSet<Users> Users { get; set; }
         public DbSet<UserSalt> UserSalts { get; set; }
         public DbSet<UserTypes> UserTypes { get; set; }

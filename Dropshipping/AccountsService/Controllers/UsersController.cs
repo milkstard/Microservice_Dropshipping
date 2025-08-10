@@ -12,21 +12,27 @@ namespace AccountsService.Controllers
     {
         private readonly AuthHelper _jwtTokenHelper;
         private readonly IUserService _userService;
-
-        public UsersController(AuthHelper jwtTokenHelper, IUserService userService)
+        private readonly AuthHelper _authHelper;
+        public UsersController(AuthHelper jwtTokenHelper, IUserService userService, AuthHelper authHelper)
         {
             _jwtTokenHelper = jwtTokenHelper;
             _userService = userService;
+            _authHelper = authHelper;
         }
 
         [HttpPost]
         public IActionResult Login([FromBody] UserLoginDTO userLoginDTO)
         {
             //Get the user in the database
-            var userExist = _userService.GetUserByLogin(userLoginDTO);
-            return userExist is null ? Unauthorized() : Ok(userExist);
-            //var loginResult = _jwtTokenHelper.GenerateAuthToken(userExist);
-            //return loginResult is null ? Unauthorized() : Ok(loginResult);
+            var user = _userService.GetUserByLogin(userLoginDTO);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            //Get the authentication token
+            var userAuth = _authHelper.GenerateAuthToken(user);
+            
+            return userAuth != null ? Ok(userAuth) : Unauthorized();
         }
     }
 }
