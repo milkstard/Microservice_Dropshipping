@@ -1,0 +1,65 @@
+@use '@angular/material' as mat;
+
+.login-page {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-header {
+    @include mat.toolbar-overrides((
+        container-background-color: #a39fdf
+    ));
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // min-height: 100vh;
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.custom-field {
+    @include mat.form-field-overrides((
+        outlined-outline-width: 0.1rem,
+        outlined-focus-outline-color: rgb(46, 46, 45),
+        outlined-hover-outline-color: rgb(46, 46, 45),
+        outlined-input-text-color: rgb(46, 46, 45),
+        outlined-outline-color: rgb(46, 46, 45),
+        outlined-input-text-placeholder-color: rgb(46, 46, 45),
+        outlined-label-text-color: rgb(46, 46, 45),
+  ));
+}
+
+button {
+  align-self: flex-end;
+}
+
+.custom-button {
+    background-color: #3f51b5;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: #303f9f; // Darker shade on hover
+    }
+}
+
