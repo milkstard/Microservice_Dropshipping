@@ -5,48 +5,49 @@
         </mat-toolbar>
     </div>
     <div class="login-container">
-    <form [formGroup]="loginDetails" class="login-form">
-        <mat-toolbar>
-            <span>DropSabuy</span>
-        </mat-toolbar>
-        <mat-form-field appearance="outline" class="custom-field">
-        <mat-label>Email</mat-label>
-        <input
-            matInput
-            placeholder="Enter your email"
-            formControlName="email"
-            [errorStateMatcher]="matcher"
-            type="email"
-        />
-        <mat-error *ngIf="loginDetails.get('email')?.hasError('email') && !loginDetails.get('email')?.hasError('required')">
-            <span>Invalid email format</span>
-        </mat-error>
-        <mat-error *ngIf="loginDetails.get('email')?.hasError('required')">
-            <span>Email is <strong>required</strong></span>
-        </mat-error>
-        </mat-form-field>
+        <form [formGroup]="loginDetails" (ngSubmit)="onClickLogin()" class="login-form">
+            <mat-toolbar>
+                <span>DropSabuy</span>
+            </mat-toolbar>
+            <mat-form-field appearance="outline" class="custom-field">
+            <mat-label>Email</mat-label>
+            <input
+                matInput
+                placeholder="Enter your email"
+                formControlName="email"
+                [errorStateMatcher]="matcher"
+                type="email"
+            />
+            <mat-error *ngIf="loginDetails.get('email')?.hasError('email') && !loginDetails.get('email')?.hasError('required')">
+                <span>Invalid email format</span>
+            </mat-error>
+            <mat-error *ngIf="loginDetails.get('email')?.hasError('required')">
+                <span>Email is <strong>required</strong></span>
+            </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="custom-field">
-        <mat-label>Password</mat-label>
-        <input
-            matInput
-            placeholder="Enter your password"
-            formControlName="password"
-            [errorStateMatcher]="matcher"
-            type="password"
-        />
-        <mat-error *ngIf="loginDetails.get('password')?.hasError('required')">
-            <span>Password is <strong>required</strong></span>
-        </mat-error>
-        <mat-error *ngIf="loginDetails.get('password')?.hasError('minlength')">
-            <span>Password must be at least <strong>6 characters</strong></span>
-        </mat-error>
-        </mat-form-field>
-
-        <button mat-raised-button  class="custom-button" type="submit" [disabled]="loginDetails.invalid">
-        Login
-        </button>
-    </form>
+            <mat-form-field appearance="outline" class="custom-field">
+            <mat-label>Password</mat-label>
+            <input
+                matInput
+                placeholder="Enter your password"
+                formControlName="password"
+                [errorStateMatcher]="matcher"
+                type="password"
+            />
+            <mat-error *ngIf="loginDetails.get('password')?.hasError('required')">
+                <span>Password is <strong>required</strong></span>
+            </mat-error>
+            <mat-error *ngIf="loginDetails.get('password')?.hasError('minlength')">
+                <span>Password must be at least <strong>6 characters</strong></span>
+            </mat-error>
+            </mat-form-field>
+            <span *ngIf="showError">Credentials failed. Check username or password.</span>
+            <button mat-raised-button  class="custom-button" type="submit" [disabled]="loginDetails.invalid">
+            Login
+            </button>
+            
+        </form>
     </div>
 </div>
 

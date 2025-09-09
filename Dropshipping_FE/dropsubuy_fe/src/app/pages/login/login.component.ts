@@ -6,6 +6,9 @@ import { FormControl, FormGroup, FormGroupDirective, FormsModule, NgForm, Reacti
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher } from '@angular/material/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { AuthServiceService } from '../../services/auth-service.service';
+import { Router } from '@angular/router';
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -24,7 +27,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class LoginComponent implements OnInit {
   public loginDetails: FormGroup = new FormGroup({});
   public matcher = new MyErrorStateMatcher();
-  constructor() {}
+  public showError: boolean = false;
+  constructor(private authService: AuthServiceService, private router: Router) {
+
+  }
 
   ngOnInit() {
     this.loginDetails = new FormGroup({
@@ -33,4 +39,20 @@ export class LoginComponent implements OnInit {
     });
   }
   
+  protected onClickLogin(): void {
+    this.showError = true;
+    if(this.loginDetails.valid) {
+      const {email, password} = this.loginDetails.value;
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          localStorage.setItem('currentUserDetails', JSON.stringify(response));
+          this.showError = false;
+          this.router.navigate(['/home']);
+        },
+        error: (error) => {
+          console.log("here?")
+        }
+      });
+    }
+  }
 }
