@@ -17,9 +17,36 @@ namespace AccountsService.Services
             _userSaltRepository = userSaltRepository;
         }
 
-        public Users AddUser(Users user)
+        public async Task<Users?> AddUser(UserRegisterDTO userRegister)
         {
-            throw new NotImplementedException();
+            //Check if username and email is existing
+            var getUserByUserName = _userRepository.GetUserByUserName(userRegister.UserName);
+            var getUserByEmail = _userRepository.GetUserByEmail(userRegister.Email);
+            //var mapUserRegister = null;
+            if (getUserByUserName == null && getUserByEmail == null)
+            {
+                var hashPassword = PasswordSaltAndHashHelper.HashPassword(userRegister.Password, out byte[] salt);
+                var userSalt = await _userSaltRepository.CreateUserSalt(new UserSalt
+                {
+                    Salt = salt,
+                    Hash = hashPassword
+                });
+                var mapUserRegister = new Users
+                {
+                    UserTypeFK = userRegister.UserType,
+                    UserSaltId = userSalt.Id,
+                    UserName = userRegister.UserName,
+                    Email = userRegister.Email,
+                    Contact_no = userRegister.Password,
+                    Password = userSalt.Hash,
+                    Confirmed_password = userSalt.Hash,
+                    Birth_date = userRegister.Birth_date,
+                    Created_date = DateTime.Now
+                };
+                return await _userRepository.AddUser(mapUserRegister);
+            }
+
+            return null;  
         }
 
         public bool DeleteUser(int id)
@@ -34,9 +61,9 @@ namespace AccountsService.Services
 
         public Users GetUserByLogin(UserLoginDTO userLoginDetails)
         {
-            //var userName = _userRepository.GetUserByEmail(userLoginDetails.Email);
+            //var userName = _userRepository.GetUserByEmailAndPassword(userLoginDetails.Email);
             /*var storedHash = _userSaltRepository.GetUserSaltByEmail(userLoginDetails.Email);*/
-            var user = _userRepository.GetUserByEmail(userLoginDetails.Email);
+            var user = _userRepository.GetUserByEmailAndPassword(userLoginDetails.Email);
             if (user == null)
             {
                 return null;

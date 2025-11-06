@@ -8,7 +8,7 @@ namespace AccountsService.Services
         public IEnumerable<Users> GetUsersList();
         public Users GetUserByLogin(UserLoginDTO userLoginDetails);
         public Users GetUserById(int id);
-        public Users AddUser(Users user);
+        public Task<Users> AddUser(UserRegisterDTO userRegister);
         public Users UpdateUser(Users user);
         public bool DeleteUser(int id);
     }

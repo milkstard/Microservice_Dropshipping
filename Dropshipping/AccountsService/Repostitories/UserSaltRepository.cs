@@ -17,5 +17,13 @@ namespace AccountsService.Repostitories
 
             return userSalt;
         }
+         
+        public async Task<UserSalt?> CreateUserSalt(UserSalt usersalt)
+        {
+            var data = _dbContextClass.UserSalts.Add(usersalt);
+            var success = await _dbContextClass.SaveChangesAsync();
+
+            return success > 0 ? data.Entity : null;
+        }
     }
-}
+} 

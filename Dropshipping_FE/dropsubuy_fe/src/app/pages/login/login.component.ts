@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   }
   
   protected onClickLogin(): void {
-    this.showError = true;
     if(this.loginDetails.valid) {
       const {email, password} = this.loginDetails.value;
       this.authService.login(email, password).subscribe({
@@ -50,6 +49,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         },
         error: (error) => {
+          this.showError = true;
           console.log("here?")
         }
       });
